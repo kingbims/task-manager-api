@@ -3,17 +3,17 @@ const multer = require('multer')
 const sharp = require('sharp')
 const User = require('../models/user.js')
 const auth = require('../middleware/auth')
-const { sendWelcomEmail, sendCancelEmail } = require('../emails/accounts')
+const { sendWelcomeEmail, sendCancelEmail } = require('../emails/mails')
 const router = new express.Router()
 
 
-
+//Create a user profile
 router.post('/users', async (req, res) => {
     const user = new User(req.body)
 
     try {
         await user.save()
-        sendWelcomEmail(user.email, user.name)
+        sendWelcomeEmail(user.email, user.name)
         const token = await user.generateAuthToken()
         res.status(201).send({ user, token })
     } catch(e) {
@@ -21,6 +21,7 @@ router.post('/users', async (req, res) => {
     }
 })
 
+//Login user
 router.post('/users/login', async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
@@ -31,6 +32,7 @@ router.post('/users/login', async (req, res) => {
     }
 })
 
+//Logout user
 router.post('/users/logout', auth, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter((token) => {
@@ -45,6 +47,7 @@ router.post('/users/logout', auth, async (req, res) => {
     }
 })
 
+//Logout user from all devices
 router.post('/users/logoutAll', auth, async (req, res) => {
     try {
         req.user.tokens = []
@@ -57,10 +60,12 @@ router.post('/users/logoutAll', auth, async (req, res) => {
     }
 })
 
+//Read profile
 router.get('/users/me', auth, async (req, res) => {
     res.send(req.user)
 })
 
+//Update profile
 router.patch('/users/me', auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'email', 'password', 'age']
@@ -79,6 +84,7 @@ router.patch('/users/me', auth, async (req, res) => {
     }
 })
 
+//Delete profile
 router.delete('/users/me', auth, async (req, res) => {
     try {
         await req.user.remove()

@@ -1,9 +1,9 @@
 const SibApiV3Sdk = require('sib-api-v3-sdk');
+require('dotenv').config()
 SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey = process.env.SENDINBLUE_API_KEY;
 
 
-
-const sendWelcomEmail = (email, name) => {
+const sendWelcomeEmail = (email, name) => {
   new SibApiV3Sdk.TransactionalEmailsApi().sendTransacEmail(
     {
       'subject':'Thanks for joining in!',
@@ -27,8 +27,7 @@ const sendCancelEmail = (email, name) => {
 }
 
 
-
 module.exports = {
-  sendWelcomEmail,
+  sendWelcomeEmail,
   sendCancelEmail
 }

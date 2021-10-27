@@ -3,6 +3,7 @@ const Task = require('../models/task.js')
 const auth = require('../middleware/auth')
 const router = new express.Router()
 
+//Create task
 router.post('/tasks', auth, async (req, res) => {
     const task = new Task({
         ...req.body,
@@ -17,6 +18,7 @@ router.post('/tasks', auth, async (req, res) => {
     }
 })
 
+//Read tasks (sorting, filtering, and pagination)
 router.get('/tasks', auth, async (req, res) => {
     const match = {}
     const sort = {}
@@ -47,6 +49,7 @@ router.get('/tasks', auth, async (req, res) => {
     }
 })
 
+//Read a task by id
 router.get('/tasks/:id', auth, async (req, res) => {
     const _id = req.params.id
 
@@ -63,6 +66,7 @@ router.get('/tasks/:id', auth, async (req, res) => {
     }
 })
 
+//Update a task
 router.patch('/tasks/:id', auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['description', 'completed']
@@ -89,6 +93,7 @@ router.patch('/tasks/:id', auth, async (req, res) => {
     }
 })
 
+//Delete a task
 router.delete('/tasks/:id', auth, async (req, res) => {
     try {
         const task = await Task.findOneAndDelete({ _id: req.params.id, owner: req.user._id })
