@@ -4,21 +4,34 @@
 
 
 
-### Install
+### API Doc - https://documenter.getpostman.com/view/12307939/UV5deEZV
+
+
+
+### Getting the App Locally
+
+1. Clone the repository with this command
+```
+git clone https://github.com/kingbims/task-manager-api.git
+```
+
+#### Install
+
+2. Install dependencies with this command
 ```
 npm install
 ```
 
+3. Ensure you have the local .env file for configuration parameters. A sample.env file is shown in the folder directory for guide
 
-
-### Usage
+4. Run the app in development environment using this command
 ```
-After dependencies have been installed, run 'npm run dev' in your cmd or terminal to get the server running. The server should be running on localhost:3000
+npm start
 ```
 
 
 
-### Run tests
+### Running tests
 ```
 npm test
 ```
@@ -29,5 +42,4 @@ npm test
 Moremi Morakinyo 
 * Email: bb.morakinyo@gmail.com
 * GitHub: https://github.com/kingbims
-* App documentation: https://documenter.getpostman.com/view/12307939/UV5deEZV
-* Project live url: https://moremi-task-manager.herokuapp.com
+* Project live url: https://moremi-task-manager.herokuapp.com/
